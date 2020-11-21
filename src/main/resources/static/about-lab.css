@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700,900&subset=cyrillic");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i&subset=cyrillic');
+
+@keyframes header_anim {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/*body {
+    height: 100%;
+    background-color: #80bdff;
+}
+
+body {
+    display: flex;
+    color: #fff;
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}*/
+body {
+    margin: 0;
+}
+
+h1 {
+    position: relative;
+    font-family: "Montserrat", sans-serif;
+    font-size: 6em;
+    font-weight: 700;
+}
+
+h2 {
+    position: relative;
+    font-family: "Montserrat", sans-serif;
+    font-size: 4em;
+    font-weight: 500;
+}
+
+
+h3 {
+    position: relative;
+    font-family: "Montserrat", sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+/* Links */
+a,
+a:focus,
+a:hover {
+    text-decoration: none;
+}
+
+/* Custom default button
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+    color: #ffffff;
+    text-shadow: none;
+    background-color: #005cbf;
+    border: .05rem solid #005cbf;
+    border-radius: 11px;
+}*/
+
+p {
+    position: relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+.cover-heading, .lead {
+    position: center;
+}
+
+.cover .btn-lg {
+    padding: .75rem .75rem;
+    font-weight: 600;
+}
+
+
+.form_button {
+    display: inline-block;
+    padding: 12px 32px;
+    transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background-color: #0A4A92;
+    background-clip: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.form_button:hover {
+    transition: all 0.3s ease-out;
+    transform: scale(1.02, 1.02);
+    box-shadow: rgba(255, 255, 255, 0.3) 0 0 16px 2px;
+}
