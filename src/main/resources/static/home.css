@@ -42,7 +42,8 @@ h1 {
 }
 
 h2 {
-    position: relative;
+    position: center;
+    padding: 50px;
     font-family: "Montserrat", sans-serif;
     font-size: 4em;
     font-weight: 500;
@@ -94,6 +95,7 @@ a:hover {
 
 p {
     position: relative;
+    padding: 10px;
     font-family: 'Open Sans', sans-serif;
     font-size: 1em;
     font-weight: 300;
@@ -103,7 +105,7 @@ p {
     position: relative;
     /*display: flex;
     flex-direction: row; это надо убрать */
-    /*min-height: 6vh;
+/*min-height: 6vh;
     color: #0a4a92;
     padding: .4rem 1rem;;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -123,7 +125,7 @@ p {
 /*
 .nav-masthead .nav-link {
     /*padding:  0.5rem 1rem; comment real*/
-    /*font-weight: 50;
+/*font-weight: 50;
     color: #0a4a92;
     background-color: transparent;
     border-bottom: .20rem solid transparent;
@@ -182,10 +184,12 @@ p {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5em;
     font-weight: 600;
+
 }
 
 .form_button:hover {
     transition: all 0.3s ease-out;
     transform: scale(1.02, 1.02);
     box-shadow: rgba(255, 255, 255, 0.3) 0 0 16px 2px;
+    outline: none;
 }

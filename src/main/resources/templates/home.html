@@ -7,7 +7,9 @@
     <link rel="stylesheet" type="text/css" href="home.css" />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
     <script type="text/javascript" src="JS/home.js"></script>
 
 </head>
@@ -20,46 +22,32 @@
     <main role="main" class="inner cover">
 
         <h2 class="cover-heading">About project.</h2>
-        <p class="lead">Встречу ночь на берегу океана
-            Я хочу с ним слиться (а-а-а)
-            И конечно же, смогу, погоди чуть-чуть
-            Мне уже тридцать (а-а-а)
-            Играю в Али-Бабу
-            Мои демоны — разбойники-убийцы
-            Их тоже тридцать
-            Но если надо, я возьму ятаган и улыбну их лица
-            Хоть я один
-            В поле воин один (один)
-            Я всего лишь один из вас (один из вас)
-            Просто один из вас
-            Но хоть я и один
-            Совсем один, один
-            Я всего лишь один из вас
-            Один из вас, один из ваc
-            От чьих глаз вдоль берега бегу я
-            Будто бы от себя и тут некуда деться
-            Но прекратил бегство
-            Когда на песке вдруг заметил младенца
-            Который пиздец как похож на меня в детстве
-            И я хочу предупредить его заранее
-            Что в этом мире нет любви
-            Лишь увлечения и сострадание
-            Малыш сияет изнутри
-            И так спокойно говорит: "Не покидай меня
-            Закрой глаза и смотри, мы две песчинки на пляже мироздания
-            А наши страхи и страдания — капли воды
-            Что падают нам на веки с небес
-            Сон — лучший клей для разбитых сердец
-            Стряхни свои грязные слёзы и спи
+        <p class="lead">
+            Вот он - мой проект!
+            Инструкция по прохождению опроса: ...
 
 
         </p>
         <p class="lead">
-            <a href="#" class="btn btn-secondary start-button" onclick="countRabbits()" role="button" >Start</a>
+            <!--<a href="/start" class="btn btn-secondary start-button" role="button" >Start_ref</a>//можно открыть в другой вкладке-->
         </p>
-        <!--<button class="form_button" type="button">Start</button>-->
+        <form action="/start" method="post" >
+            <button class="form_button" type="submit" onclick="StartSession()">Start</button>
+            <!--<div class="model-body" >
+                <img id="ref" th:src="${ref}" > js подгружает картинки - динамически! + эффекты
+                <img id="dist1" th:src="${dist1}"  >
+                <img id="dist2" th:src="${dist2}" >
+                <br>
+                <p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p><
+                <button>1</button> // при нажатии запись идет в БД, картинки сменяются
+                <button>2</button>
+                <button class="btb btn-warning" onclick="PopUpHide()">Stop</button> / при нажатии сессия завершается - просто убирается попап окно и всплывает "спасибо"
+            </div>-->
+        </form>
+        <!--<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Launch demo modal
+        </button>-->
     </main>
-
     </div>
     <!--<div th:insert="blocks/footer :: footer"></div>-->
 </body>
