@@ -11,10 +11,10 @@
     <header th:insert="blocks/header :: header"></header>
     <article class="article article_bluebg article_second">
         <h2 class="white">Contact us</h2>
-        <form class="form">
-            <input type="email" class="form_input" placeholder="E-mail" />
-            <textarea class="form_textarea" placeholder="Ваше сообщение"></textarea>
-            <button class="form_button" type="button">Отправить</button>
+        <form class="form" action="/contact" method="post">
+            <input type="email" name="credentials"  class="form_input" placeholder="Ваш E-mail" />
+            <textarea name="text" class="form_textarea" placeholder="Ваше сообщение"></textarea>
+            <button class="form_button" type="submit">Отправить</button>
         </form>
     </article>
     <!--<div th:insert="blocks/footer :: footer"></div>-->

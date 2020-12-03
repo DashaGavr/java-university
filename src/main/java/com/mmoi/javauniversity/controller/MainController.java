@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller
@@ -19,6 +24,8 @@ public class MainController {
 
     static ArrayList<String> ref_paths = new ArrayList<>();
     static ArrayList<String> dist_paths = new ArrayList<>();
+    static List<String> dist_psnr = new ArrayList<>();
+    static List<String> dist_ssim = new ArrayList<>();
 
     static {
         String cwd = System.getProperty("user.dir");
@@ -37,6 +44,20 @@ public class MainController {
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
         }
+        String PSNR = "psnr_base4.txt";
+
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(PSNR))) {
+            dist_psnr = br.lines().collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String SSIM = "ssim_base4.txt";
+
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(SSIM))) {
+            dist_ssim = br.lines().collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Autowired
@@ -45,8 +66,6 @@ public class MainController {
     private SessionEntity sessionEntity;
 
     private Session session;
-
-    private  HashMap<Long, Long> InSessionsId;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -71,24 +90,25 @@ public class MainController {
     @PostMapping("/start")
     public String StartSession(Model model) {
         session = new Session();
-        //InSessionsId = new HashMap<>();
-        //InSessionsId.put(session.getId(), 1L);
         sessionEntity = new SessionEntity();
-        //sessionEntity.setSession_id(session.getId());
-        ArrayList<SessionEntity> tmp = new ArrayList<SessionEntity>();
+        ArrayList<SessionEntity> tmp = new ArrayList<>();
         tmp.add(sessionEntity);
         session.setSessions(tmp);
 
         sessionEntity.setInSessionId((long) session.getSessionSize());
         //sessionEntity.setInSessionId(InSessionsId.get(session.getId()));
 
+        String ref, dist1, dist2;
+        ArrayList<String> temp = generateImages();
+        dist1 = temp.get(0);
+        dist2 = temp.get(1);
+        ref = temp.get(2);
+        System.out.println("start    " + dist1 + " " + dist2);
 
-        String ref = generateRefImage();
         model.addAttribute("ref", "/images/ref_images/" + ref);
-        String dist1 = generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
         model.addAttribute("dist1", "/images/databaseImage/" + dist1);
-        String dist2 = generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
         model.addAttribute("dist2", "/images/databaseImage/" + dist2);
+
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);
@@ -105,23 +125,23 @@ public class MainController {
         sessionEntity.setStop(new Date());
         sessionEntity.setChosen(chosen);
 
-        System.out.println(chosen);
-
-        //sessionRepository.save(session);
+        //System.out.println(chosen);
 
         sessionEntity = new SessionEntity();
 
-        System.out.println("ses size" + session.getSessionSize());
-        //InSessionsId.replace(session.getId(), InSessionsId.get(session.getId()) + 1);
-        //System.out.println(InSessionsId.get(session.getId()) + 1);
-        //sessionEntity.setInSessionId(InSessionsId.get(session.getId()));
+        //System.out.println("session size" + session.getSessionSize());
 
-        String ref = generateRefImage();
+        String ref, dist1, dist2;
+        ArrayList<String> temp = generateImages();
+        dist1 = temp.get(0);
+        dist2 = temp.get(1);
+        ref = temp.get(2);
+        System.out.println("newImage    " + dist1 + " " + dist2);
+
         model.addAttribute("ref", "/images/ref_images/" + ref);
-        String dist1 = generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
         model.addAttribute("dist1", "/images/databaseImage/" + dist1);
-        String dist2 = generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
         model.addAttribute("dist2", "/images/databaseImage/" + dist2);
+
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);
@@ -134,33 +154,8 @@ public class MainController {
         return "start";
     }
 
-    public String generateRefImage() {
-        Random rand = new Random();
-        int index = rand.nextInt(ref_paths.size());
-
-        System.out.println("index_ref " + index + "  size " + ref_paths.size());
-
-        return ref_paths.get(index);
-        //return "images/databaseImage/I01_0.0061_3.0459_11.0474.bmp";
-    }
-
-    public String generateImage(String ref) {
-        Random rand = new Random();
-        ArrayList<String> tmp = new ArrayList<String>();
-
-        System.out.println(ref.split("\\.")[0]);
-
-        dist_paths.stream().filter(i -> i.contains(ref.split("\\.")[0])).forEach(tmp::add);
-        int index = rand.nextInt(tmp.size());
-
-        System.out.println("index_dist  " + index + "  size " + tmp.size());
-
-        return tmp.get(index);          //"images/databaseImage/I01_0.2719_3.7582_11.9509.bmp";
-    }
-
     @PostMapping("/stop")
-    public String StopSession(Model model)
-    {
+    public String StopSession(Model model) {
         System.out.println("stop");
         model.addAttribute("title", "Main page");
         sessionEntity.setStop(new Date());
@@ -169,8 +164,7 @@ public class MainController {
     }
 
     @GetMapping("/stop")
-    public String StopSessionWithEsc(Model model)
-    {
+    public String StopSessionWithEsc(Model model) {
         System.out.println("esc");
         model.addAttribute("title", "Main page");
         sessionEntity.setStop(new Date());
@@ -178,50 +172,52 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/error")
-    public String Error(Model model)
-    {
-
-        model.addAttribute("title", "Error page");
-        return "redirect:/";
+    private ArrayList<String> generateImages() {
+        String ref = generateRefImage();
+        String dist1 = generateDistImage(ref);
+        String dist2 = generateDistImage(ref);
+        ArrayList<String> res = new ArrayList<>(Arrays.asList(dist1, dist2, ref));
+        if (!Compare(dist1, dist2))
+            res = generateImages();
+        return res;
     }
 
-/*
-
-    @PostMapping("/start/1")
-    public String NextImages( Model model)
-    {
-        session.setChosen("1");
-        sessionRepository.save(session);
-        String ref = generateRefImage();
-        model.addAttribute("ref", "/images/ref_images/" + ref);
-        String dist1 =  generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
-        model.addAttribute("dist1", "/images/databaseImage/" + dist1);
-        String dist2 =  generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
-        model.addAttribute("dist2", "/images/databaseImage/" + dist2);
-        session = new SessionEntity();
-        session.setRefImgName(ref);
-        session.setDistImgName1(dist1);
-        session.setDistImgName2(dist2);
-        //sessionRepository.save(session);
-        return "start";
+    private String generateRefImage() {
+        Random rand = new Random();
+        int index = rand.nextInt(ref_paths.size());
+        //System.out.println("index_ref " + index + "  size " + ref_paths.size());
+        return ref_paths.get(index);
     }
-    @PostMapping("/start/2")
-    public String NextImages2( Model model)
-    {
-        session.setChosen("2");
-        sessionRepository.save(session);
-        String ref = generateRefImage();
-        model.addAttribute("ref", "/images/ref_images/" + ref);
-        String dist1 =  generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
-        model.addAttribute("dist1", "/images/databaseImage/" + dist1);
-        String dist2 =  generateImage(ref);//"images/databaseImage/I01_0.083_0.6206_13.7056.bmp";
-        model.addAttribute("dist2", "/images/databaseImage/" + dist2);
-        session = new SessionEntity();
-        session.setRefImgName(ref);
-        session.setDistImgName1(dist1);
-        session.setDistImgName2(dist2);
-        //sessionRepository.save(session);
-        return "start";
-    }*/
+
+    private String generateDistImage(String ref) {
+        Random rand = new Random();
+        ArrayList<String> tmp = new ArrayList<>();
+
+        //System.out.println(ref.split("\\.")[0]);
+        dist_paths.stream().filter(i -> i.contains(ref.split("\\.")[0])).forEach(tmp::add);
+        int index = rand.nextInt(tmp.size());
+        //System.out.println("index_dist  " + index + "  size " + tmp.size());
+        return tmp.get(index);
+    }
+
+    private boolean Compare(String distOne, String distTwo) {
+        float ssim1 = 0, ssim2 = 0, psnr1 = 0, psnr2 = 0;
+
+        Optional<String> dist1_psnr = dist_psnr.stream().filter(i -> (i.contains(distOne))).findFirst();
+        Optional<String> dist2_psnr = dist_psnr.stream().filter(i -> (i.contains(distTwo))).findFirst();
+
+        Optional<String> dist1_ssim = dist_ssim.stream().filter(i -> (i.contains(distOne))).findFirst();
+        Optional<String> dist2_ssim = dist_ssim.stream().filter(i -> (i.contains(distTwo))).findFirst();
+
+        if (dist1_psnr.isPresent() && dist2_psnr.isPresent()) {
+            psnr1 = Float.parseFloat(dist1_psnr.get().split(" ")[1]);
+            psnr2 = Float.parseFloat(dist2_psnr.get().split(" ")[1]);
+        }
+        if (dist1_ssim.isPresent() && dist2_ssim.isPresent()) {
+            ssim1 = Float.parseFloat(dist1_ssim.get().split(" ")[1]);
+            ssim2 = Float.parseFloat(dist2_ssim.get().split(" ")[1]);
+        }
+        return !(Math.abs(ssim1 - ssim2) > 0.3) && !(Math.abs(psnr1 - psnr2) > 1);
+    }
+
 }

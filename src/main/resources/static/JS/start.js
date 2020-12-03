@@ -1,11 +1,12 @@
 $(document).ready(function(){
         $('.imageShow').modal('show');
-
 });
 
+//setTimeout(imgLoaded, 5000);
 function stopsession() {
     $('.imageShow').modal('hide');
     $('.thanks').modal('show');
+
     //document.location.replace("http://localhost:8080");
 }
 /*
@@ -24,6 +25,12 @@ document.addEventListener('keydown', function(event) {
         //document.location.replace("http://localhost:8080")
     }
 });
+
+function imgLoaded(img){
+    var imgWrapper = img.parentNode;
+    imgWrapper.className += imgWrapper.className ? ' loaded' : 'loaded';
+}
+
 
 
 //esc нажатие такая же обработка

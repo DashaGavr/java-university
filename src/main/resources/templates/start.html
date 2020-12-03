@@ -80,14 +80,37 @@
     <div class="modal-content myCont" role="document">
         <button type="button" class="modal-close stopWithIcon" aria-label="Close" onclick="stopsession()"></button>
         <div class="model-body">
-            <img id="ref" th:src="${ref}">
+            <!--<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>-->
+            <div class="img_wrapper">
+                <!--<div class="css_spinner">
+                    <div class="half left">
+                        <div class="band"></div>
+                    </div>
+                    <div class="half right">
+                        <div class="band"></div>
+                    </div>
+                </div>-->
+                <img id="ref" th:src="${ref}" onload="imgLoaded(this)">
+            </div>
             <form class="chosen"  method="post">
-                <!--<div class="dist">-->
-                <img class="dist one" th:src="${dist1}" >
-                <button type="submit" class="btn btn-primary chosen-btn " id="one" value="1" th:method="post" formaction="/nextimage?chosen=1"> 1</button>
-                <button type="submit" class="btn btn-primary chosen-btn " id="two" value="2" th:method="post" formaction="/nextimage?chosen=2"> 2</button>
-                <img class="dist two" th:src="${dist2}" >
-                <!--</div>-->
+                <div class="img_wrapper"><!--
+                    <div class="css_spinner">
+                        <div class="half left">
+                            <div class="band"></div>
+                        </div>
+                        <div class="half right">
+                            <div class="band"></div>
+                        </div>
+                    </div>-->
+                    <img class="dist one" th:src="${dist1}" onload="imgLoaded(this)">
+                </div>
+                    <button type="submit" class="btn btn-primary chosen-btn " id="one" value="1" th:method="post" formaction="/nextimage?chosen=1"> 1</button>
+                    <button type="submit" class="btn btn-primary chosen-btn " id="two" value="2" th:method="post" formaction="/nextimage?chosen=2"> 2</button>
+                <div class="img_wrapper">
+                    <img class="dist two" th:src="${dist2}" onload="imgLoaded(this)">
+                </div>
             </form>
         </div>
     </div>
