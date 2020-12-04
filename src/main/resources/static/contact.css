@@ -10,6 +10,10 @@
     }
 }
 
+#sent {
+    transition: all 0.3s;
+}
+
 body {
     margin: 0;
 }
@@ -28,12 +32,18 @@ h2 {
     font-weight: 700;
 }
 
-
 h3 {
     position: relative;
     font-family: "Montserrat", sans-serif;
     font-size: 2em;
     font-weight: 250;
+}
+
+p {
+    position: relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    font-weight: 300;
 }
 
 /* Links */
@@ -43,7 +53,6 @@ a:hover {
     color: #fff;
     text-decoration: none;
 }
-
 
 .btn-secondary,
 .btn-secondary:hover,
@@ -61,18 +70,6 @@ a:hover {
     font-size: 1em;
     font-weight: 300;
 }
-
-#sent {
-    transition: all 0.3s;
-}
-
-p {
-    position: relative;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
-    font-weight: 300;
-}
-
 
 .cover-heading, .lead {
     position: center;
@@ -168,7 +165,6 @@ p {
 .form_textarea {
     resize: none;
 }
-
 
 .form_button {
     display: inline-block;

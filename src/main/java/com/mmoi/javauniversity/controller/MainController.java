@@ -33,26 +33,30 @@ public class MainController {
         File[] ref_tmp = new File("src/main/resources/static/images/ref_images").listFiles();
         File[] dist_tmp = new File("src/main/resources/static/images/databaseImage").listFiles();
         //InSessionsId = new HashMap<>();
-        try (Stream<File> tmp_paths = Arrays.stream(ref_tmp).sequential()) {
-            tmp_paths
-                    .forEach(i -> ref_paths.add(i.getName()));
+        if (ref_tmp!= null && (ref_tmp.length > 0)) {
+            try (Stream<File> tmp_paths = Arrays.stream(ref_tmp).sequential()) {
+                tmp_paths
+                        .forEach(i -> ref_paths.add(i.getName()));
+            }
         }
 
-        try (Stream<File> tmp_paths = Arrays.stream(dist_tmp).sequential()) {
-            tmp_paths
-                    .forEach(i -> dist_paths.add(i.getName()));
-        } catch (Exception e) {
-            System.out.println(e.fillInStackTrace());
+        if (dist_tmp != null && (dist_tmp.length > 0)) {
+            try (Stream<File> tmp_paths = Arrays.stream(dist_tmp).sequential()) {
+                tmp_paths
+                        .forEach(i -> dist_paths.add(i.getName()));
+            } catch (Exception e) {
+                System.out.println(e.fillInStackTrace());
+            }
         }
+
         String PSNR = "psnr_base4.txt";
-
         try (BufferedReader br = Files.newBufferedReader(Paths.get(PSNR))) {
             dist_psnr = br.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String SSIM = "ssim_base4.txt";
 
+        String SSIM = "ssim_base4.txt";
         try (BufferedReader br = Files.newBufferedReader(Paths.get(SSIM))) {
             dist_ssim = br.lines().collect(Collectors.toList());
         } catch (IOException e) {
@@ -203,6 +207,8 @@ public class MainController {
     private boolean Compare(String distOne, String distTwo) {
         float ssim1 = 0, ssim2 = 0, psnr1 = 0, psnr2 = 0;
 
+        if (dist_ssim.isEmpty() || dist_psnr.isEmpty())
+            return false;
         Optional<String> dist1_psnr = dist_psnr.stream().filter(i -> (i.contains(distOne))).findFirst();
         Optional<String> dist2_psnr = dist_psnr.stream().filter(i -> (i.contains(distTwo))).findFirst();
 
