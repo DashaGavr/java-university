@@ -104,12 +104,12 @@
                             <div class="band"></div>
                         </div>
                     </div>-->
-                    <img class="dist one" th:src="${dist1}" onload="imgLoaded(this)">
+                    <img class="one" th:src="${dist1}" onload="imgLoaded(this)">
                 </div>
                     <button type="submit" class="btn btn-primary chosen-btn " id="one" value="1" th:method="post" formaction="/nextimage?chosen=1"> 1</button>
                     <button type="submit" class="btn btn-primary chosen-btn " id="two" value="2" th:method="post" formaction="/nextimage?chosen=2"> 2</button>
                 <div class="img_wrapper">
-                    <img class="dist two" th:src="${dist2}" onload="imgLoaded(this)">
+                    <img class="two" th:src="${dist2}" onload="imgLoaded(this)">
                 </div>
             </form>
         </div>

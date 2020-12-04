@@ -32,8 +32,6 @@ public class ContactController {
     @PostMapping("/contact")
     public String home(@RequestParam String credentials, @RequestParam String text) {
         try {
-            System.out.println(credentials);
-            System.out.println(text);
             sendEmail(credentials, text);
             return "/contact";
         }
