@@ -28,48 +28,53 @@
             </p>
         </main>
     </div>
-<!--<div th:insert="blocks/footer :: footer"></div>-->
+
+    <div class="modal thanks" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Спасибо!</h5>
+                    <form class="stop"  method="post" action="/stop">
+                        <button type="submit" class="close gohome" aria-label="Close"> <!--onclick="gohome()" data-dismiss="modal"  -->
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-body">
+                    <p>Мы ценим Ваш вклад и благодарим за отзывчивость!)</p>
+                </div>
+                <div class="modal-footer">
+                    <form class="stop"  method="post" action="/stop">
+                        <button type="submit" class="btn btn-secondary gohome" > Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div th:insert="blocks/footer :: footer"></div>-->
 </body>
+
 <div class="modal imageShow" tabindex="-1" role="dialog">
     <div class="modal-content myCont" role="document">
-        <button type="button" class="modal-close stopWithIcon" aria-label="Close" onclick="stopsession()"></button>
-        <div class="model-body">
-            <div class="img_wrapper">
+        <!--<div class="model-body">-->
+            <button type="button" class="modal-close stopWithIcon" aria-label="Close" onclick="stopsession()"></button>
+            <div class="img_wrapper2 ref">
                 <img id="ref" th:src="${ref}" onload="imgLoaded(this)">
             </div>
             <form class="chosen"  method="post">
-                <div class="img_wrapper">
-                    <img class="one" th:src="${dist1}" onload="imgLoaded(this)">
+                <div class="img_wrapper first">
+                    <img id="fimg" th:src="${dist1}" onload="imgLoaded(this)">
                 </div>
                     <button type="submit" class="btn btn-primary chosen-btn " id="one" value="1" th:method="post" formaction="/nextimage?chosen=1"> 1</button>
                     <button type="submit" class="btn btn-primary chosen-btn " id="two" value="2" th:method="post" formaction="/nextimage?chosen=2"> 2</button>
-                <div class="img_wrapper">
-                    <img class="two" th:src="${dist2}" onload="imgLoaded(this)">
+                <div class="img_wrapper second">
+                    <img id="simg" th:src="${dist2}" onload="imgLoaded(this)">
                 </div>
             </form>
-        </div>
+        <!--</div>-->
     </div>
 </div>
-<div class="modal thanks" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Спасибо!</h5>
-                <form class="stop"  method="post" action="/stop">
-                    <button type="submit" class="close gohome" aria-label="Close"> <!--onclick="gohome()" data-dismiss="modal"  -->
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </form>
-            </div>
-            <div class="modal-body">
-                <p>Мы ценим Ваш вклад и благодарим за отзывчивость!)</p>
-            </div>
-            <div class="modal-footer">
-                <form class="stop"  method="post" action="/stop">
-                    <button type="submit" class="btn btn-secondary gohome" > Close</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 </html>

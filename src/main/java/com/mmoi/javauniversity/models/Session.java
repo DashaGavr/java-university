@@ -1,5 +1,7 @@
 package com.mmoi.javauniversity.models;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,9 @@ public class Session {
     @OneToMany(fetch = FetchType.LAZY,
         mappedBy = "session",
         cascade = CascadeType.ALL)
-    private List<SessionEntity> sessions;
+    private List<SessionEntity> sessions = new ArrayList<>();
+
+    private long sessionCount = 0;
 
     public Session() {
     }
@@ -26,9 +30,11 @@ public class Session {
         this.sessions = sessions;
     }
 
-    public void addSessionEntity(SessionEntity sessionEntity)
+    public void addSessionEntity(SessionEntity sE)
     {
-        sessions.add(sessionEntity);
+        sessions = new ArrayList<>();
+        sessions.add(sE);
+        sessionCount += 1;
     }
 
     public int getSessionSize() {
@@ -37,5 +43,14 @@ public class Session {
 
     public Long getId() {
         return id;
+    }
+
+
+    public long getSessionCount() {
+        return sessionCount;
+    }
+
+    public void setSessionCount(long sessionCount) {
+        this.sessionCount = sessionCount;
     }
 }

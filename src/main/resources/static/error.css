@@ -23,7 +23,7 @@ h1 {
 
 h2 {
     position: center;
-    padding: 50px;
+    /*padding: 50px;*/
     margin-top: 50px;
     font-family: "Montserrat", sans-serif;
     font-size: 4em;
@@ -69,6 +69,7 @@ a:hover {
     font-size: 1.5em;
     font-weight: 600;
     margin-left: 550px;
+    position: center;
 }
 
 .cover-heading, .lead {
@@ -78,28 +79,4 @@ a:hover {
 .cover .btn-lg {
     padding: .75rem .75rem;
     font-weight: 600;
-}
-
-.form_button {
-    display: inline-block;
-    padding: 12px 32px;
-    transition: all 0.3s ease-out;
-    text-transform: uppercase;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    background-color: #0A4A92;
-    background-clip: border-box;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.5em;
-    font-weight: 600;
-
-}
-
-.form_button:hover {
-    transition: all 0.3s ease-out;
-    transform: scale(1.02, 1.02);
-    box-shadow: rgba(255, 255, 255, 0.3) 0 0 16px 2px;
-    outline: none;
 }

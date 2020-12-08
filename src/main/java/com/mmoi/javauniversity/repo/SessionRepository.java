@@ -5,5 +5,5 @@ import com.mmoi.javauniversity.models.SessionEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-public interface SessionEntityRepository extends CrudRepository<Session, Long> {
+public interface SessionRepository extends CrudRepository<Session, Long> {
 }

@@ -1,6 +1,12 @@
 $(document).ready(function(){
-        $('.imageShow').modal('show');
+    $('.imageShow').modal('show');
+
 });
+
+/*
+$('#ref').style.position = "center";
+$('#ref').style.width= 0.666 * document.documentElement.clientWidth;
+*/
 
 //setTimeout(imgLoaded, 5000);
 function stopsession() {
@@ -15,20 +21,28 @@ $(".gohome").click( function () {
 });*/
 
 function gohome() {
-    document.location.replace("http://localhost:8080")
+    document.location.replace("http://localhost:8081")
 }
 
 document.addEventListener('keydown', function(event) {
     const key = event.key; // const {key} = event; in ES6+
     if (key === "Escape") {
-        document.location.replace("http://localhost:8080/stop")
+        document.location.replace("http://localhost:8081/stop")
         //document.location.replace("http://localhost:8080")
     }
 });
 
 function imgLoaded(img){
     var imgWrapper = img.parentNode;
+    //console.log(img.height);
+    let s = Math.floor(img.height * 1.333);
+    let ww = window.innerWidth;
+    console.log(s/ww * 100);
+    img.style.width = s + 'px';
+    //img.style.width = Math.floor(s/ww * 100) + '%';
+
     imgWrapper.className += imgWrapper.className ? ' loaded' : 'loaded';
+
 }
 
 

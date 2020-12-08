@@ -2,7 +2,7 @@ package com.mmoi.javauniversity.controller;
 
 import com.mmoi.javauniversity.models.Session;
 import com.mmoi.javauniversity.models.SessionEntity;
-import com.mmoi.javauniversity.repo.SessionEntityRepository;
+import com.mmoi.javauniversity.repo.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +31,10 @@ public class MainController {
         String cwd = System.getProperty("user.dir");
         System.out.println("Current working directory : " + cwd);
         File[] ref_tmp = new File("src/main/resources/static/images/ref_images").listFiles();
-        File[] dist_tmp = new File("src/main/resources/static/images/databaseImage").listFiles();
-        //InSessionsId = new HashMap<>();
-        if (ref_tmp!= null && (ref_tmp.length > 0)) {
+        File[] dist_tmp = new File("/Users/artembarysev/Desktop/base4").listFiles();
+
+        if (ref_tmp != null && (ref_tmp.length > 0)) {
+            System.out.println("OK from ref");
             try (Stream<File> tmp_paths = Arrays.stream(ref_tmp).sequential()) {
                 tmp_paths
                         .forEach(i -> ref_paths.add(i.getName()));
@@ -41,6 +42,8 @@ public class MainController {
         }
 
         if (dist_tmp != null && (dist_tmp.length > 0)) {
+            System.out.println("OK from dist");
+
             try (Stream<File> tmp_paths = Arrays.stream(dist_tmp).sequential()) {
                 tmp_paths
                         .forEach(i -> dist_paths.add(i.getName()));
@@ -65,7 +68,7 @@ public class MainController {
     }
 
     @Autowired
-    private SessionEntityRepository sessionRepository;
+    private SessionRepository sessionRepository;
 
     private SessionEntity sessionEntity;
 
@@ -95,12 +98,9 @@ public class MainController {
     public String StartSession(Model model) {
         session = new Session();
         sessionEntity = new SessionEntity();
-        ArrayList<SessionEntity> tmp = new ArrayList<>();
-        tmp.add(sessionEntity);
-        session.setSessions(tmp);
-
-        sessionEntity.setInSessionId((long) session.getSessionSize());
-        //sessionEntity.setInSessionId(InSessionsId.get(session.getId()));
+        //ArrayList<SessionEntity> tmp = new ArrayList<>();
+        //tmp.add(sessionEntity);
+        //session.setSessions(tmp);
 
         String ref, dist1, dist2;
         ArrayList<String> temp = generateImages();
@@ -110,15 +110,18 @@ public class MainController {
         System.out.println("start    " + dist1 + " " + dist2);
 
         model.addAttribute("ref", "/images/ref_images/" + ref);
-        model.addAttribute("dist1", "/images/databaseImage/" + dist1);
-        model.addAttribute("dist2", "/images/databaseImage/" + dist2);
+        model.addAttribute("dist1", "/images/ref_images/" + ref);
+        model.addAttribute("dist2", "/images/ref_images/" + ref);
 
+        //System.out.println("start    " + dist1 + " " + dist2);
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);
         sessionEntity.setDistImgName2(dist2);
         sessionEntity.setStart(new Date());
         sessionEntity.setSession(session);
+        sessionEntity.setInSessionId((long) session.getSessionSize());
+
         //sessionRepository.save(session);
         return "start";
     }
@@ -128,7 +131,9 @@ public class MainController {
 
         sessionEntity.setStop(new Date());
         sessionEntity.setChosen(chosen);
-
+        session.addSessionEntity(sessionEntity);
+        sessionEntity.setInSessionId(session.getSessionCount());
+        sessionRepository.save(session);
         //System.out.println(chosen);
 
         sessionEntity = new SessionEntity();
@@ -142,16 +147,16 @@ public class MainController {
         ref = temp.get(2);
         System.out.println("newImage    " + dist1 + " " + dist2);
 
+
         model.addAttribute("ref", "/images/ref_images/" + ref);
-        model.addAttribute("dist1", "/images/databaseImage/" + dist1);
-        model.addAttribute("dist2", "/images/databaseImage/" + dist2);
+        model.addAttribute("dist1", "/images/dbImages/" + dist1);
+        model.addAttribute("dist2", "/images/dbImages/" + dist2);
 
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);
         sessionEntity.setDistImgName2(dist2);
         sessionEntity.setStart(new Date());
-        session.addSessionEntity(sessionEntity);
         sessionEntity.setInSessionId((long) session.getSessionSize());
         sessionEntity.setSession(session);
 
@@ -207,8 +212,10 @@ public class MainController {
     private boolean Compare(String distOne, String distTwo) {
         float ssim1 = 0, ssim2 = 0, psnr1 = 0, psnr2 = 0;
 
-        if (dist_ssim.isEmpty() || dist_psnr.isEmpty())
+        if (dist_ssim.isEmpty() || dist_psnr.isEmpty()) {
+            //dist_psnr.forEach(System.out::println);
             return false;
+        }
         Optional<String> dist1_psnr = dist_psnr.stream().filter(i -> (i.contains(distOne))).findFirst();
         Optional<String> dist2_psnr = dist_psnr.stream().filter(i -> (i.contains(distTwo))).findFirst();
 
