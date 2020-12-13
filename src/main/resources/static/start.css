@@ -78,7 +78,6 @@ a:hover {
     font-weight: 300;
 }
 
-
 .chosen {
     display: flex;
     flex-direction: row;
@@ -86,6 +85,7 @@ a:hover {
     height: 50%;
     margin-left: 0;
     margin-bottom: 0;
+    margin-right: 0;
 }
 
 #ref {
@@ -94,23 +94,13 @@ a:hover {
     border-color: #fafafa;
     margin-left: auto;
     margin-right: auto;
-    /*width: 60%*/;
-    /*max-width: 70%;
-    width: 66.66%; !important;*/
-    /*-moz-transition: all 5s;
-    -webkit-transition: all 5s;
-    transition: all 5s; !important;
-    -webkit-transition: opacity 6s ease-in-out;
-    -o-transition: opacity 6s ease-in-out;
-    transition: opacity 6s ease-in-out;
-    eight: 384px;
-    width: 512px;*/
+    max-width: 70%;
+
 }
 
 .img_wrapper2 {
     background: #fafafa;
-    /*display: inline-flex;*/
-    position: relative;
+    display: inline-flex;
     overflow: hidden;
     width: 100%;
     height: 50%;
@@ -128,9 +118,12 @@ a:hover {
 .img_wrapper img {
     background: url("images/826white.gif") no-repeat center center;
     border-color: #fafafa;
-/*  -webkit-transition: opacity .5s;
+    -webkit-transition: opacity .5s;
     -moz-transition: opacity .5s;
-    transition: opacity .5s;*/
+    transition: opacity .5s ease-in-out;
+    border-radius: 3px;
+    margin-right: 0;
+    box-shadow: rgba(255, 255, 255, 0.2) 0 0 16px 3px;
 }
 
 .img_wrapper.loaded img{
@@ -141,6 +134,19 @@ a:hover {
 .img_wrapper.loaded .css_spinner {
     display: none;
 }*/
+
+#my_timer {
+    position: absolute;
+    z-index: 1;
+    top: 70px;
+    right: 3%;
+    white-space: nowrap;
+    outline: none;
+    color: #0A4A92;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+}
 
 .chosen-btn {
     /*margin-top: 10%;*/
@@ -155,6 +161,7 @@ a:hover {
     font-size: 1.1em;
     font-weight: 200;
     text-align: center;
+    background-color: #0A4A92;
 }
 
 #one {
@@ -221,13 +228,14 @@ a:hover {
     font-weight: 600;
 }*/
 
-
-@media (min-width: 40em){
-    .img_wrapper.first {
+@media (min-width: 4em){
+    #fimg {
         float: left;
+        padding-left: 0;
     }
-    .img_wrapper.second{
+    #simg {
         float: right;
+        padding-right: 0;
         margin-right: 0;
     }
 }

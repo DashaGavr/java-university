@@ -24,6 +24,8 @@ public class SessionEntity {
             cascade=CascadeType.ALL)
     private Session session;
 
+    private String userCookie;
+
     /*private Long session_id;*/
 
     public SessionEntity() {
@@ -95,6 +97,14 @@ public class SessionEntity {
 
     public void setInSessionId(Long inSessionId) {
         InSessionId = inSessionId;
+    }
+
+    public String getUserCookie() {
+        return userCookie;
+    }
+
+    public void setUserCookie(String userCookie) {
+        this.userCookie = userCookie;
     }
 
     /*public Long getSession_id() {

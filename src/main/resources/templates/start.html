@@ -59,6 +59,7 @@
     <div class="modal-content myCont" role="document">
         <!--<div class="model-body">-->
             <button type="button" class="modal-close stopWithIcon" aria-label="Close" onclick="stopsession()"></button>
+            <p id="my_timer" onload="startTimer()">  </p>
             <div class="img_wrapper2 ref">
                 <img id="ref" th:src="${ref}" onload="imgLoaded(this)">
             </div>

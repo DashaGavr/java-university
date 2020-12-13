@@ -19,6 +19,8 @@ public class Session {
 
     private long sessionCount = 0;
 
+    private String UserCookie;
+
     public Session() {
     }
 
@@ -52,5 +54,13 @@ public class Session {
 
     public void setSessionCount(long sessionCount) {
         this.sessionCount = sessionCount;
+    }
+
+    public String getUserCookie() {
+        return UserCookie;
+    }
+
+    public void setUserCookie(String userCookie) {
+        UserCookie = userCookie;
     }
 }

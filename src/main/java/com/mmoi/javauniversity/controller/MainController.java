@@ -4,12 +4,16 @@ import com.mmoi.javauniversity.models.Session;
 import com.mmoi.javauniversity.models.SessionEntity;
 import com.mmoi.javauniversity.repo.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -21,17 +25,41 @@ import java.util.stream.Stream;
 
 @Controller
 public class MainController {
-
+    @Autowired
+    private static ApplicationArguments applicationArguments;
+    //private static String[] paths = applicationArguments.getSourceArgs();
     static ArrayList<String> ref_paths = new ArrayList<>();
     static ArrayList<String> dist_paths = new ArrayList<>();
     static List<String> dist_psnr = new ArrayList<>();
     static List<String> dist_ssim = new ArrayList<>();
+    static File[] ref_tmp;
+    static File[] dist_tmp;
+    static String PSNR;
+    static String SSIM;
+
 
     static {
-        String cwd = System.getProperty("user.dir");
-        System.out.println("Current working directory : " + cwd);
-        File[] ref_tmp = new File("src/main/resources/static/images/ref_images").listFiles();
-        File[] dist_tmp = new File("/Users/artembarysev/Desktop/base4").listFiles();
+        String[] paths;
+        if (applicationArguments != null)
+            paths = applicationArguments.getSourceArgs() ;
+        else paths = new String[] {};
+
+        if (paths.length == 0)
+        {
+            String cwd = System.getProperty("user.dir");
+            System.out.println("Current working directory : " + cwd);
+            ref_tmp = new File("src/main/resources/static/images/ref_images").listFiles();
+            dist_tmp = new File("/Users/artembarysev/Desktop/dbImages").listFiles();
+            PSNR = "psnr_base4.txt";
+            SSIM = "ssim_base4.txt";
+        }
+        else {
+            Arrays.stream(paths).forEach(System.out::println);
+            ref_tmp = new File(paths[1]).listFiles();
+            dist_tmp = new File(paths[2]).listFiles();
+            PSNR = paths[3];
+            SSIM = paths[4];
+        }
 
         if (ref_tmp != null && (ref_tmp.length > 0)) {
             System.out.println("OK from ref");
@@ -51,20 +79,18 @@ public class MainController {
                 System.out.println(e.fillInStackTrace());
             }
         }
-
-        String PSNR = "psnr_base4.txt";
         try (BufferedReader br = Files.newBufferedReader(Paths.get(PSNR))) {
             dist_psnr = br.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String SSIM = "ssim_base4.txt";
         try (BufferedReader br = Files.newBufferedReader(Paths.get(SSIM))) {
             dist_ssim = br.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Autowired
@@ -75,7 +101,10 @@ public class MainController {
     private Session session;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, HttpServletResponse response) {
+        //userCookie = user;
+        Cookie c = new Cookie("user", "0");
+        response.addCookie(c);
         model.addAttribute("title", "Main page");
         return "home";
     }
@@ -95,12 +124,11 @@ public class MainController {
     }
 
     @PostMapping("/start")
-    public String StartSession(Model model) {
+    public String PostStartSession(@CookieValue(name = "user") String user, Model model) {
         session = new Session();
         sessionEntity = new SessionEntity();
-        //ArrayList<SessionEntity> tmp = new ArrayList<>();
-        //tmp.add(sessionEntity);
-        //session.setSessions(tmp);
+
+        System.out.println(user);
 
         String ref, dist1, dist2;
         ArrayList<String> temp = generateImages();
@@ -110,10 +138,11 @@ public class MainController {
         System.out.println("start    " + dist1 + " " + dist2);
 
         model.addAttribute("ref", "/images/ref_images/" + ref);
-        model.addAttribute("dist1", "/images/ref_images/" + ref);
-        model.addAttribute("dist2", "/images/ref_images/" + ref);
+        model.addAttribute("dist1", "/images/dbImages/" + dist1);
+        model.addAttribute("dist2", "/images/dbImages/" + dist2);
 
-        //System.out.println("start    " + dist1 + " " + dist2);
+        session.setUserCookie(user);
+        sessionEntity.setUserCookie(session.getUserCookie());
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);
@@ -122,7 +151,6 @@ public class MainController {
         sessionEntity.setSession(session);
         sessionEntity.setInSessionId((long) session.getSessionSize());
 
-        //sessionRepository.save(session);
         return "start";
     }
 
@@ -134,19 +162,14 @@ public class MainController {
         session.addSessionEntity(sessionEntity);
         sessionEntity.setInSessionId(session.getSessionCount());
         sessionRepository.save(session);
-        //System.out.println(chosen);
 
         sessionEntity = new SessionEntity();
-
-        //System.out.println("session size" + session.getSessionSize());
 
         String ref, dist1, dist2;
         ArrayList<String> temp = generateImages();
         dist1 = temp.get(0);
         dist2 = temp.get(1);
         ref = temp.get(2);
-        System.out.println("newImage    " + dist1 + " " + dist2);
-
 
         model.addAttribute("ref", "/images/ref_images/" + ref);
         model.addAttribute("dist1", "/images/dbImages/" + dist1);
@@ -157,8 +180,8 @@ public class MainController {
         sessionEntity.setDistImgName1(dist1);
         sessionEntity.setDistImgName2(dist2);
         sessionEntity.setStart(new Date());
-        sessionEntity.setInSessionId((long) session.getSessionSize());
         sessionEntity.setSession(session);
+        sessionEntity.setUserCookie(session.getUserCookie());
 
         return "start";
     }
@@ -168,6 +191,9 @@ public class MainController {
         System.out.println("stop");
         model.addAttribute("title", "Main page");
         sessionEntity.setStop(new Date());
+        sessionEntity.setChosen("0");
+        session.addSessionEntity(sessionEntity);
+        sessionEntity.setInSessionId(session.getSessionCount());
         sessionRepository.save(session);
         return "redirect:/";
     }
@@ -177,6 +203,9 @@ public class MainController {
         System.out.println("esc");
         model.addAttribute("title", "Main page");
         sessionEntity.setStop(new Date());
+        sessionEntity.setChosen("0");
+        session.addSessionEntity(sessionEntity);
+        sessionEntity.setInSessionId(session.getSessionCount());
         sessionRepository.save(session);
         return "redirect:/";
     }
