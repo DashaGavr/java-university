@@ -49,7 +49,7 @@ public class MainController {
         {
             String cwd = System.getProperty("user.dir");
             System.out.println("Current working directory : " + cwd);
-            ref_tmp = new File("src/main/resources/static/images/ref_images").listFiles();
+            ref_tmp = new File("/Users/artembarysev/Desktop/refImages").listFiles();
             dist_tmp = new File("/Users/artembarysev/Desktop/dbImages").listFiles();
             PSNR = "psnr_base4.txt";
             SSIM = "ssim_base4.txt";
@@ -58,8 +58,8 @@ public class MainController {
             Arrays.stream(paths).forEach(System.out::println);
             ref_tmp = new File(paths[0] + "/refImages").listFiles();
             dist_tmp = new File(paths[0] + "/distImages").listFiles();
-            PSNR = "psnr.txt";
-            SSIM = "ssim.txt";
+            PSNR = paths[0] + "psnr.txt";
+            SSIM = paths[0] + "ssim.txt";
         }
 
         if (ref_tmp != null && (ref_tmp.length > 0)) {
