@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 
 @Controller
 public class MainController {
+
     @Autowired
     private static ApplicationArguments applicationArguments;
     //private static String[] paths = applicationArguments.getSourceArgs();
@@ -55,10 +56,10 @@ public class MainController {
         }
         else {
             Arrays.stream(paths).forEach(System.out::println);
-            ref_tmp = new File(paths[1]).listFiles();
-            dist_tmp = new File(paths[2]).listFiles();
-            PSNR = paths[3];
-            SSIM = paths[4];
+            ref_tmp = new File(paths[0] + "/refImages").listFiles();
+            dist_tmp = new File(paths[0] + "/distImages").listFiles();
+            PSNR = "psnr.txt";
+            SSIM = "ssim.txt";
         }
 
         if (ref_tmp != null && (ref_tmp.length > 0)) {
