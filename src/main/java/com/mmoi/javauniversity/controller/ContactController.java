@@ -33,10 +33,10 @@ public class ContactController {
     public String home(@RequestParam String credentials, @RequestParam String text) {
         try {
             sendEmail(credentials, text);
-            return "/contact";
+            return "contact";
         }
         catch (Exception ex) {
-            return "Error in sending email: "+ex;
+            return "Error in sending email: " + ex;
         }
     }
 

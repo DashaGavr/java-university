@@ -4,7 +4,9 @@ import com.mmoi.javauniversity.models.Session;
 import com.mmoi.javauniversity.models.SessionEntity;
 import com.mmoi.javauniversity.repo.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -25,9 +27,16 @@ import java.util.stream.Stream;
 
 @Controller
 public class MainController {
+    /*TODO: paths from CL*/
+    /*@Autowired
+    private Environment env;
+    {
+        System.out.println("ENVVV"  + env.getProperty("property.dir"));
+    }*/
 
     @Autowired
     private static ApplicationArguments applicationArguments;
+
     //private static String[] paths = applicationArguments.getSourceArgs();
     static ArrayList<String> ref_paths = new ArrayList<>();
     static ArrayList<String> dist_paths = new ArrayList<>();
@@ -38,12 +47,18 @@ public class MainController {
     static String PSNR;
     static String SSIM;
 
+    /*@Value("${property.dir}")
+    static String propertyDir;*/
 
     static {
         String[] paths;
         if (applicationArguments != null)
             paths = applicationArguments.getSourceArgs() ;
         else paths = new String[] {};
+        /*System.out.println("ARGS: from maincontroller");
+        Arrays.stream(paths).forEach(System.out::println);
+
+        System.out.println("ELSE PROPERTYDIR" + propertyDir);*/
 
         if (paths.length == 0)
         {
@@ -58,8 +73,8 @@ public class MainController {
             Arrays.stream(paths).forEach(System.out::println);
             ref_tmp = new File(paths[0] + "/refImages").listFiles();
             dist_tmp = new File(paths[0] + "/distImages").listFiles();
-            PSNR = paths[0] + "psnr.txt";
-            SSIM = paths[0] + "ssim.txt";
+            PSNR = paths[0] + "/psnr.txt";
+            SSIM = paths[0] + "/ssim.txt";
         }
 
         if (ref_tmp != null && (ref_tmp.length > 0)) {
@@ -175,7 +190,6 @@ public class MainController {
         model.addAttribute("ref", "/images/ref_images/" + ref);
         model.addAttribute("dist1", "/images/dbImages/" + dist1);
         model.addAttribute("dist2", "/images/dbImages/" + dist2);
-
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);

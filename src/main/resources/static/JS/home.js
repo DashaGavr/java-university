@@ -9,7 +9,9 @@ $(function () {
     }
     else {
         var id = gen();
-        document.cookie = "user=" + id;
+        let date = new Date( new Date(2023, 11, 31, 0,0,0));
+        date = date.toUTCString();
+        document.cookie = "user=" + id + "expires=" + date;
         console.log("new" + id);
         localStorage.setItem("id", id);
     }
