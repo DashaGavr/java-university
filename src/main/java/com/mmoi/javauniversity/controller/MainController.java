@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller
-public class MainController {
+public class MainController  {
     /*TODO: paths from CL*/
     /*@Autowired
     private Environment env;
@@ -47,22 +47,13 @@ public class MainController {
     static String PSNR;
     static String SSIM;
 
-    /*@Value("${property.dir}")
-    static String propertyDir;*/
 
     static {
-        String[] paths;
-        if (applicationArguments != null)
-            paths = applicationArguments.getSourceArgs() ;
-        else paths = new String[] {};
-        /*System.out.println("ARGS: from maincontroller");
-        Arrays.stream(paths).forEach(System.out::println);
+        String path = System.getenv("userdir");
 
-        System.out.println("ELSE PROPERTYDIR" + propertyDir);*/
-
-        if (paths.length == 0)
+        if (path == null)
         {
-            String cwd = System.getProperty("user.dir");
+            String cwd = System.getProperty("user.dir"); // get env
             System.out.println("Current working directory : " + cwd);
             ref_tmp = new File("/Users/artembarysev/Desktop/refImages").listFiles();
             dist_tmp = new File("/Users/artembarysev/Desktop/dbImages").listFiles();
@@ -70,11 +61,10 @@ public class MainController {
             SSIM = "ssim_base4.txt";
         }
         else {
-            Arrays.stream(paths).forEach(System.out::println);
-            ref_tmp = new File(paths[0] + "/refImages").listFiles();
-            dist_tmp = new File(paths[0] + "/distImages").listFiles();
-            PSNR = paths[0] + "/psnr.txt";
-            SSIM = paths[0] + "/ssim.txt";
+            ref_tmp = new File(path + "/refImages").listFiles();
+            dist_tmp = new File(path + "/distImages").listFiles();
+            PSNR = path + "/psnr.txt";
+            SSIM = path + "/ssim.txt";
         }
 
         if (ref_tmp != null && (ref_tmp.length > 0)) {
@@ -132,7 +122,7 @@ public class MainController {
     }
 
     @GetMapping("/start")
-    public String GetStartSession(Model model) {
+    public String GetStartSession(Model model) throws Exception {
         Iterable<Session> sessions = sessionRepository.findAll();
         model.addAttribute("sessions", sessions);
         model.addAttribute("title", "Start");

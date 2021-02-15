@@ -12,24 +12,13 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class JavaUniversityApplication {
-	/*static Environment env;*/
-	/*@Value("${property.dir}")
-	String propertyDir;*/
 
 	public static void main(String[] args)  {
-		/*String someProperty= env.getProperty("someProperty");
-		System.out.println("property	"+ someProperty);*/
+
 		System.out.println("ARGS:");
 		Arrays.stream(args).forEach(System.out::println);
-		/*SpringApplication application = new SpringApplication(JavaUniversityApplication.class);
-		application.setAddCommandLineProperties(false);
-		application.run(args);*/
+
 		SpringApplication.run(JavaUniversityApplication.class, args);
 	}
 
-/*	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		boolean containsOption = args.containsOption("property.dir");
-		System.out.println("Contains person.name: " + containsOption);
-	}*/
 }
