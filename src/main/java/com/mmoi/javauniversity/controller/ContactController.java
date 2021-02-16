@@ -1,3 +1,4 @@
+/*
 package com.mmoi.javauniversity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +52,4 @@ public class ContactController {
         sender.send(message);
     }
 }
-
+*/
