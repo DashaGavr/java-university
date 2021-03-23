@@ -185,7 +185,7 @@ a:hover {
     border-radius: 50%;
     height: 45px;
     width: 45px;
-    background: url("/images/x-circle.svg") no-repeat center center;
+    background: url("images/x-circle.svg") no-repeat center center;
     /*text-indent: 100%*/;
     white-space: nowrap;
     outline: none;

@@ -34,7 +34,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Спасибо!</h5>
-                    <form class="stop"  method="post" action="/stop">
+                    <form class="stop"  method="post" action="stop">
                         <button type="submit" class="close gohome" aria-label="Close"> <!--onclick="gohome()" data-dismiss="modal"  -->
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -44,7 +44,7 @@
                     <p>Мы ценим Ваш вклад и благодарим за отзывчивость!)</p>
                 </div>
                 <div class="modal-footer">
-                    <form class="stop"  method="post" action="/stop">
+                    <form class="stop"  method="post" action="stop">
                         <button type="submit" class="btn btn-secondary gohome" > Close</button>
                     </form>
                 </div>
@@ -67,8 +67,8 @@
                 <div class="img_wrapper first">
                     <img id="fimg" th:src="${dist1}" onload="imgLoaded(this)">
                 </div>
-                    <button type="submit" class="btn btn-primary chosen-btn " id="one" value="1" th:method="post" formaction="/nextimage?chosen=1"> 1</button>
-                    <button type="submit" class="btn btn-primary chosen-btn " id="two" value="2" th:method="post" formaction="/nextimage?chosen=2"> 2</button>
+                    <button type="submit" class="btn btn-primary chosen-btn " id="one" value="1" th:method="post" formaction="nextimage?chosen=1"> 1</button>
+                    <button type="submit" class="btn btn-primary chosen-btn " id="two" value="2" th:method="post" formaction="nextimage?chosen=2"> 2</button>
                 <div class="img_wrapper second">
                     <img id="simg" th:src="${dist2}" onload="imgLoaded(this)">
                 </div>
