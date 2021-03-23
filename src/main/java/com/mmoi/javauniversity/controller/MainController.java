@@ -143,9 +143,9 @@ public class MainController  {
         ref = temp.get(2);
         System.out.println("start    " + dist1 + " " + dist2);
 
-        model.addAttribute("ref", "/images/ref_images/" + ref);
-        model.addAttribute("dist1", "/images/dbImages/" + dist1);
-        model.addAttribute("dist2", "/images/dbImages/" + dist2);
+        model.addAttribute("ref", "images/ref_images/" + ref);
+        model.addAttribute("dist1", "images/dbImages/" + dist1);
+        model.addAttribute("dist2", "images/dbImages/" + dist2);
 
         session.setUserCookie(user);
         sessionEntity.setUserCookie(session.getUserCookie());
@@ -177,9 +177,9 @@ public class MainController  {
         dist2 = temp.get(1);
         ref = temp.get(2);
 
-        model.addAttribute("ref", "/images/ref_images/" + ref);
-        model.addAttribute("dist1", "/images/dbImages/" + dist1);
-        model.addAttribute("dist2", "/images/dbImages/" + dist2);
+        model.addAttribute("ref", "images/ref_images/" + ref);
+        model.addAttribute("dist1", "images/dbImages/" + dist1);
+        model.addAttribute("dist2", "images/dbImages/" + dist2);
 
         sessionEntity.setRefImgName(ref);
         sessionEntity.setDistImgName1(dist1);
