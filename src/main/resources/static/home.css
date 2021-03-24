@@ -24,11 +24,15 @@ h1 {
 h2 {
     position: center;
     padding: 50px;
-    margin-top: 50px;
+    margin-top: 10px;
     font-family: "Montserrat", sans-serif;
     font-size: 4em;
     font-weight: 500;
 }
+.about {
+    animation: text 2500ms 1;
+}
+
 
 h3 {
     position: relative;
@@ -39,10 +43,18 @@ h3 {
 
 p {
     position: relative;
-    padding: 10px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: 300;
+}
+.about-text {
+    position: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 300;
+    animation: text 3500ms 1;
 }
 
 /* Links */
@@ -82,7 +94,7 @@ a:hover {
 
 .form_button {
     display: inline-block;
-    padding: 12px 32px;
+    padding: 18px 32px 10px;
     transition: all 0.3s ease-out;
     text-transform: uppercase;
     color: #fff;
@@ -99,7 +111,14 @@ a:hover {
 
 .form_button:hover {
     transition: all 0.3s ease-out;
-    transform: scale(1.02, 1.02);
+    transform: scale(1.04, 1.04);
     box-shadow: rgba(255, 255, 255, 0.3) 0 0 16px 2px;
     outline: none;
+}
+
+@keyframes text {
+    0% {
+         margin-left: -40px;
+    }
+
 }

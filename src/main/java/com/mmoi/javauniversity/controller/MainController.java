@@ -57,8 +57,8 @@ public class MainController  {
             System.out.println("Current working directory : " + cwd);
             ref_tmp = new File("/Users/artembarysev/Desktop/refImages").listFiles();
             dist_tmp = new File("/Users/artembarysev/Desktop/dbImages").listFiles();
-            PSNR = "psnr_base4.txt";
-            SSIM = "ssim_base4.txt";
+            PSNR = "/Users/artembarysev/Desktop/dbMETR/psnr_base4.txt";
+            SSIM = "/Users/artembarysev/Desktop/dbMETR/ssim_base4.txt";
         }
         else {
             ref_tmp = new File(path + "/refImages").listFiles();
@@ -236,10 +236,8 @@ public class MainController  {
         Random rand = new Random();
         ArrayList<String> tmp = new ArrayList<>();
 
-        //System.out.println(ref.split("\\.")[0]);
         dist_paths.stream().filter(i -> i.contains(ref.split("\\.")[0])).forEach(tmp::add);
         int index = rand.nextInt(tmp.size());
-        //System.out.println("index_dist  " + index + "  size " + tmp.size());
         return tmp.get(index);
     }
 
@@ -264,7 +262,7 @@ public class MainController  {
             ssim1 = Float.parseFloat(dist1_ssim.get().split(" ")[1]);
             ssim2 = Float.parseFloat(dist2_ssim.get().split(" ")[1]);
         }
-        return !(Math.abs(ssim1 - ssim2) > 0.3) && !(Math.abs(psnr1 - psnr2) > 1);
+        return !(Math.abs(ssim1 - ssim2) > 0.3) && !(Math.abs(psnr1 - psnr2) > 3);
     }
 
 }

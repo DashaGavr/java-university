@@ -27,6 +27,7 @@ function randomInt(min, max) {
 
 function StartSession ()
 {
-    $('.imageShow').modal('show');
+    $('.guide').modal('show');
+    //$('.imageShow').modal('show');
 }
 

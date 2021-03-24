@@ -52,12 +52,10 @@
         </div>
     </div>
 
-    <!--<div th:insert="blocks/footer :: footer"></div>-->
 </body>
 
 <div class="modal imageShow" tabindex="-1" role="dialog">
     <div class="modal-content myCont" role="document">
-        <!--<div class="model-body">-->
             <button type="button" class="modal-close stopWithIcon" aria-label="Close" onclick="stopsession()"></button>
             <p id="my_timer" onload="startTimer()">  </p>
             <div class="img_wrapper2 ref">
@@ -73,7 +71,6 @@
                     <img id="simg" th:src="${dist2}" onload="imgLoaded(this)">
                 </div>
             </form>
-        <!--</div>-->
     </div>
 </div>
 

@@ -16,28 +16,59 @@
 
 <body class="text-center">
 
-
     <div class="cover-container"> <!--d-flexw-100 h-100 p-3 mx-auto flex-column">-->
     <header th:insert="blocks/header :: header"></header>
     <main role="main" class="inner cover">
 
-        <h2 class="cover-heading">About project.</h2>
-        <p class="lead">
-            Вот он - мой проект!
-            Инструкция по прохождению опроса:
+        <div class = "about">
+            <h2 class="cover-heading about">About project</h2>
+        </div>
+
+        <p class="about-text">Данный опрос является частью дипломной работы по теме
+            "Метод анализа субъективного качества изображений при потере высокочастотной информации".
         </p>
-        <p class="lead">
-            Вам будут показаны три изображения. Верхнее - исходное изображение без дефектов.
-            Два нижних - изображения с артефактами. Выбирете то, которое больше похоже на исходное, лучше, на Ваш взгляд, по качетсву.
-            Увеличить изображения нельзя. Время опроса ограничено 15 минутами, но вы можете пройти опрос повторно, когда Вам захочется закончить оценку,
-            нажмите кнопку в правом верхнем углу.
+        <p class="about-text">Наша цель - собрать оценки пользователей для изображений с различными артефактами,<br>
+            которые обычно появляются при съемке на камеру не лучшего качества, такими как:<br>
+            эффект ложного оконтуривания, дефокус и зашумление.<br>
         </p>
-        <p class="lead">
-            <!--<a href="start" class="btn btn-secondary start-button" role="button" >Start_ref</a>//можно открыть в другой вкладке-->
-        </p>
-        <form action="start" method="post" >
+
+        <div class="modal guide" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Инструкция по прохождению опроса</h5>
+                        <form class="stop"  method="post" action="start">
+                            <button type="submit" class="close gohome" aria-label="Close"> <!--onclick="gohome()" data-dismiss="modal"  -->
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">
+                            Вам будут показаны три изображения. Верхнее - исходное изображение без дефектов.
+                            Два нижних - изображения с артефактами. Выберите то, которое больше похоже на исходное, лучше, на Ваш взгляд, по качеству.
+                        </p>
+                        <p class="lead">
+                            Пожалуйста, не проходите опрос с мобильных устройств.
+                            Увеличить изображения нельзя. Время опроса ограничено 15 минутами, но вы можете пройти опрос повторно.
+                            Когда Вам захочется закончить оценку, нажмите кнопку в правом верхнем углу.
+                            <!--<a href="start" class="btn btn-secondary start-button" role="button" >Start_ref</a>//можно открыть в другой вкладке-->
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <form class="stop"  method="post" action="start">
+                            <button type="submit" class="btn btn-secondary gohome" >OK</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="form_button" type="submit" onclick="StartSession()">Start</button>
+
+        <!--<form action="start" method="post" >
             <button class="form_button" type="submit" onclick="StartSession()">Start</button>
-            <!--<div class="model-body" >
+            &lt;!&ndash;<div class="model-body" >
                 <img id="ref" th:src="${ref}" > js подгружает картинки - динамически! + эффекты
                 <img id="dist1" th:src="${dist1}"  >
                 <img id="dist2" th:src="${dist2}" >
@@ -46,8 +77,8 @@
                 <button>1</button> // при нажатии запись идет в БД, картинки сменяются
                 <button>2</button>
                 <button class="btb btn-warning" onclick="PopUpHide()">Stop</button> / при нажатии сессия завершается - просто убирается попап окно и всплывает "спасибо"
-            </div>-->
-        </form>
+            </div>&ndash;&gt;
+        </form>-->
 
     </main>
     </div>

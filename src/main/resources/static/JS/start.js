@@ -5,7 +5,6 @@ $(document).ready(function(){
     var t = localStorage.getItem('timer');
     if (t == null) {
         t = '00:15:01';
-        console.log("null")
     }
     my_timer.innerHTML = t;
     localStorage.setItem('timer', t);
@@ -16,10 +15,8 @@ $(document).ready(function(){
 document.addEventListener('keydown', function(event) {
     const key = event.key; // const {key} = event; in ES6+
     if (key === "Escape") {
-
         localStorage.setItem("timer", "00:15:01");
-        document.location.replace("http://localhost:8081/stop")
-        //document.location.replace("http://localhost:8080")
+        document.location.replace("/stop")
     }
 });
 
