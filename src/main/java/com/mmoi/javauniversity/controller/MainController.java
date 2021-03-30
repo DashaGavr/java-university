@@ -220,7 +220,7 @@ public class MainController  {
         String dist1 = generateDistImage(ref);
         String dist2 = generateDistImage(ref);
         ArrayList<String> res = new ArrayList<>(Arrays.asList(dist1, dist2, ref));
-        if (!Compare(dist1, dist2))
+        if (!Compare(dist1, dist2) || (dist1.equals(dist2)))
             res = generateImages();
         return res;
     }
